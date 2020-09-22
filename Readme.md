@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Andrei Efremov](https://up.htmlacademy.ru/javascript/21/user/570505).
-* Наставник: `без наставника`.
+* Наставник: `без наставника!`.
 
 ---
 
