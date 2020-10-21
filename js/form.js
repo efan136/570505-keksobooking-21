@@ -50,4 +50,6 @@
     activateForm: activateForm,
     fillAddressFieldActive: fillAddressFieldActive
   };
+
+
 })();
