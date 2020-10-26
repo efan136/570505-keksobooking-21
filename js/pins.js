@@ -1,9 +1,10 @@
 'use strict';
 (function () {
+
   let pinTemplate = document.querySelector("#pin").content.querySelector(".map__pin");
   let mapPins = document.querySelector(".map__pins");
   let housingType = document.querySelector('#housing-type');
-  let serverData = [];
+  window.serverData = [];
   const MAX_PINS_ON_MAP = 5;
 
   let removePins = function () {
@@ -31,26 +32,27 @@
       pinElement.style.top = slicedData[i].location.y + "px";
       mapPins.appendChild(pinElement);
     }
+
   };
 
   window.successHandler = function (data) {
-    serverData = data;
+    window.serverData = data;
     drawPins(data);
+    window.drawCard(window.serverData[0]);
   };
 
   let updatePins = function () {
-    let sameTypeAccommodation = serverData.filter(function (newPin) {
+    let sameTypeAccommodation = window.serverData.filter(function (newPin) {
       return newPin.offer.type === housingType.value;
     });
     removePins();
     drawPins(sameTypeAccommodation);
   };
 
-
   housingType.addEventListener('change', function () {
     if (housingType.value === 'any') {
       removePins();
-      drawPins(serverData);
+      drawPins(window.serverData);
     } else {
       updatePins();
     }
