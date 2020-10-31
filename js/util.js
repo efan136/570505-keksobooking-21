@@ -5,7 +5,14 @@
       action();
     }
   };
+
+  let isEscEvent = function (evt, action) {
+    if (evt.key === 'Escape') {
+      action();
+    }
+  };
   window.util = {
-    isEnterEvent: isEnterEvent
+    isEnterEvent: isEnterEvent,
+    isEscEvent: isEscEvent
   };
 })();

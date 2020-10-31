@@ -6,6 +6,7 @@
   let pinCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   window.drawCard = function (serverData) {
+
     let renderCard = function () {
       let pinCardElement = pinCardTemplate.cloneNode(true);
       pinCardElement.querySelector('.popup__title').textContent = serverData.offer.title;
@@ -43,8 +44,39 @@
     };
 
     let fragment = document.createDocumentFragment();
-
     fragment.appendChild(renderCard());
-    map.insertBefore(fragment, mapFilterContainer);
+
+    if (document.querySelector('.popup')) {
+      map.removeChild(document.querySelector('.popup'));
+      map.insertBefore(fragment, mapFilterContainer);
+    } else {
+      map.insertBefore(fragment, mapFilterContainer);
+    }
+
+    let PinCard = document.querySelector('.popup');
+    let closePinCardBtn = document.querySelector('.popup__close');
+
+
+    let onPinCardEscPress = function (evt) {
+      if (evt.key === 'Escape') {
+        closePinCard();
+      }
+    };
+
+    let closePinCard = function () {
+
+      map.removeChild(PinCard);
+      document.removeEventListener('keydown', onPinCardEscPress);
+    };
+
+    closePinCardBtn.addEventListener('click', function () {
+      closePinCard();
+    });
+
+    window.addEventListener('keydown', function (evt) {
+      if (evt.key === "Escape") {
+        closePinCard();
+      }
+    });
   };
 })();

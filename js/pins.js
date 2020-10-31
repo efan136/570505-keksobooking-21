@@ -5,6 +5,7 @@
   let mapPins = document.querySelector(".map__pins");
   let housingType = document.querySelector('#housing-type');
   window.serverData = [];
+  window.filtredData = [];
   const MAX_PINS_ON_MAP = 5;
 
   let removePins = function () {
@@ -32,27 +33,28 @@
       pinElement.style.top = slicedData[i].location.y + "px";
       mapPins.appendChild(pinElement);
     }
-
   };
 
   window.successHandler = function (data) {
     window.serverData = data;
     drawPins(data);
-    window.drawCard(window.serverData[0]);
+    window.filtredData = window.serverData;
   };
 
   let updatePins = function () {
-    let sameTypeAccommodation = window.serverData.filter(function (newPin) {
+    window.filtredData = window.serverData.filter(function (newPin) {
       return newPin.offer.type === housingType.value;
     });
     removePins();
-    drawPins(sameTypeAccommodation);
+    drawPins(window.filtredData);
   };
 
   housingType.addEventListener('change', function () {
     if (housingType.value === 'any') {
       removePins();
-      drawPins(window.serverData);
+      window.filtredData = window.serverData;
+
+      drawPins(window.filtredData);
     } else {
       updatePins();
     }
@@ -68,4 +70,16 @@
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
   };
+
+  mapPins.addEventListener('click', function (evt) {
+    let drawnMapPins = document.querySelectorAll('.map__pin');
+    let drawnMapPinsImg = document.querySelectorAll('.map__pin img');
+    for (let i = 1; i <= drawnMapPins.length; i++) {
+      if (drawnMapPins[i] === evt.target || drawnMapPinsImg[i] === evt.target) {
+        window.drawCard(window.filtredData[i - 1]);
+      }
+    }
+  });
+
+
 })();
