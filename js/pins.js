@@ -1,12 +1,16 @@
 'use strict';
 (function () {
+  window.mainPin = document.querySelector(".map__pin--main");
+  window.serverData = [];
+  window.filtredData = [];
 
   let pinTemplate = document.querySelector("#pin").content.querySelector(".map__pin");
   let mapPins = document.querySelector(".map__pins");
   let housingType = document.querySelector('#housing-type');
-  window.serverData = [];
-  window.filtredData = [];
+  const MAIN_PIN_ARROW_HEIGHT = 22;
   const MAX_PINS_ON_MAP = 5;
+  window.mainPinStartY = Math.round(window.mainPin.offsetHeight + MAIN_PIN_ARROW_HEIGHT);
+  window.mainPinStartX = Math.round(window.mainPin.offsetWidth / 2);
 
   let removePins = function () {
     let drawnPins = document.querySelectorAll('.map__pin');
@@ -80,6 +84,4 @@
       }
     }
   });
-
-
 })();
