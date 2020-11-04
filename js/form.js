@@ -2,8 +2,6 @@
 'use strict';
 (function () {
   let addressField = document.querySelector("#address");
-  let mapPinMain = document.querySelector(".map__pin--main");
-  const MAIN_PIN_ARROW_HEIGHT = 22;
   let roomNumber = document.querySelector("#room_number");
   let guestNumber = document.querySelector("#capacity");
 
@@ -14,7 +12,7 @@
   };
 
   let fillAddressFieldDisabled = function () {
-    addressField.value = Math.round(mapPinMain.offsetTop + (mapPinMain.offsetHeight / 2)) + "," + Math.round(mapPinMain.offsetLeft + (mapPinMain.offsetWidth / 2));
+    addressField.value = Math.round(window.mainPin.offsetTop + (window.mainPin.offsetHeight / 2)) + "," + Math.round(window.mainPin.offsetLeft + (window.mainPin.offsetWidth / 2));
   };
 
   let activateForm = function (arr) {
@@ -24,7 +22,9 @@
   };
 
   let fillAddressFieldActive = function () {
-    addressField.value = Math.round(mapPinMain.offsetTop + mapPinMain.offsetHeight + MAIN_PIN_ARROW_HEIGHT) + "," + Math.round(mapPinMain.offsetLeft + (mapPinMain.offsetWidth / 2));
+    let mainPinCurrentY = Math.round(window.mainPin.offsetTop + window.mainPinStartY);
+    let mainPinCurrentX = Math.round(window.mainPin.offsetLeft + window.mainPinStartX);
+    addressField.value = mainPinCurrentY + "," + mainPinCurrentX;
   };
 
   let validateGuestForm = function () {
@@ -50,6 +50,4 @@
     activateForm: activateForm,
     fillAddressFieldActive: fillAddressFieldActive
   };
-
-
 })();
