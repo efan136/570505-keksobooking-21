@@ -1,9 +1,11 @@
 
 'use strict';
 (function () {
+  let main = document.querySelector('main');
   let addressField = document.querySelector("#address");
   let roomNumber = document.querySelector("#room_number");
   let guestNumber = document.querySelector("#capacity");
+  window.addForm = document.querySelector('.ad-form');
 
   let disableForm = function (arr) {
     for (let i = 0; i <= arr.length - 1; i++) {
@@ -43,6 +45,64 @@
     }
   };
 
+  let returnDefaultPage = function () {
+    window.map.disableMap();
+    window.form.disableForm(window.fieldsets);
+    window.form.disableForm(window.selects);
+    window.pins.removePins();
+    window.addForm.reset();
+    window.mainPinResetPosition();
+  };
+
+  let errorHandler = function () {
+    let errorTemplate = document.querySelector('#error').content.querySelector('.error');
+    let uploadErrorPopup = errorTemplate.cloneNode(true);
+    main.appendChild(uploadErrorPopup);
+    let errorButton = document.querySelector('.error__button');
+    let errorPopup = document.querySelector('.error');
+
+    let closeErrorPopup = function () {
+      main.removeChild(errorPopup);
+    };
+
+    errorButton.addEventListener('click', function () {
+      closeErrorPopup();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        closeErrorPopup();
+      }
+    });
+    document.addEventListener('click', function () {
+      closeErrorPopup();
+    });
+  };
+
+  let successHandler = function () {
+    returnDefaultPage();
+    let successTemplate = document.querySelector('#success').content.querySelector('.success');
+    let uploadSuccessElement = successTemplate.cloneNode(true);
+    main.appendChild(uploadSuccessElement);
+    let SuccessPopup = main.querySelector('.success');
+    let closeSuccessPopup = function () {
+      main.removeChild(SuccessPopup);
+    };
+    document.addEventListener('click', function () {
+      closeSuccessPopup();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        closeSuccessPopup();
+      }
+    });
+  };
+  window.addForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.upload(new FormData(window.addForm), successHandler, errorHandler);
+  });
+
   window.form = {
     validateGuestForm: validateGuestForm,
     fillAddressFieldDisabled: fillAddressFieldDisabled,
@@ -50,4 +110,6 @@
     activateForm: activateForm,
     fillAddressFieldActive: fillAddressFieldActive
   };
+
+
 })();

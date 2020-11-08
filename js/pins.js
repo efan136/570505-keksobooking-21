@@ -1,6 +1,8 @@
 'use strict';
 (function () {
   window.mainPin = document.querySelector(".map__pin--main");
+  const mainPinX = '570px';
+  const mainPinY = '375px';
   window.serverData = [];
   window.filtredData = [];
 
@@ -12,11 +14,21 @@
   window.mainPinStartY = Math.round(window.mainPin.offsetHeight + MAIN_PIN_ARROW_HEIGHT);
   window.mainPinStartX = Math.round(window.mainPin.offsetWidth / 2);
 
+  window.mainPinResetPosition = function () {
+    window.mainPin.style.left = mainPinX;
+    window.mainPin.style.top = mainPinY;
+  };
+
   let removePins = function () {
     let drawnPins = document.querySelectorAll('.map__pin');
     for (let i = drawnPins.length - 1; i >= 1; i--) {
       mapPins.removeChild(drawnPins[i]);
     }
+  };
+
+
+  window.pins = {
+    removePins: removePins
   };
 
   let sliceServerData = function (data) {
@@ -49,13 +61,13 @@
     window.filtredData = window.serverData.filter(function (newPin) {
       return newPin.offer.type === housingType.value;
     });
-    removePins();
+    window.pins.removePins();
     drawPins(window.filtredData);
   };
 
   housingType.addEventListener('change', function () {
     if (housingType.value === 'any') {
-      removePins();
+      window.pins.removePins();
       window.filtredData = window.serverData;
 
       drawPins(window.filtredData);
