@@ -14,7 +14,13 @@
     window.mainPin.removeEventListener('keydown', onMainPinEnterPress);
   };
 
+  let disableMap = function () {
+    window.mainMap.classList.add("map--faded");
+    addInformationForm.classList.add("ad-form--disabled");
+  };
+
   window.map = {
-    activateMap: activateMap
+    activateMap: activateMap,
+    disableMap: disableMap
   };
 })();
