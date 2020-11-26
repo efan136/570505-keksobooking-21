@@ -4,11 +4,10 @@
   const mainPinX = '570px';
   const mainPinY = '375px';
   window.serverData = [];
-  window.filtredData = [];
 
   let pinTemplate = document.querySelector("#pin").content.querySelector(".map__pin");
   let mapPins = document.querySelector(".map__pins");
-  let housingType = document.querySelector('#housing-type');
+
   const MAIN_PIN_ARROW_HEIGHT = 22;
   const MAX_PINS_ON_MAP = 5;
   window.mainPinStartY = Math.round(window.mainPin.offsetHeight + MAIN_PIN_ARROW_HEIGHT);
@@ -26,7 +25,6 @@
     }
   };
 
-
   window.pins = {
     removePins: removePins
   };
@@ -39,7 +37,7 @@
     }
   };
 
-  let drawPins = function (data) {
+  window.drawPins = function (data) {
     let slicedData = sliceServerData(data);
     for (let i = 0; i < slicedData.length; i++) {
       let pinElement = pinTemplate.cloneNode(true);
@@ -53,28 +51,10 @@
 
   window.successHandler = function (data) {
     window.serverData = data;
-    drawPins(data);
+    window.drawPins(data);
     window.filtredData = window.serverData;
+    window.filtredPins = window.filtredData;
   };
-
-  let updatePins = function () {
-    window.filtredData = window.serverData.filter(function (newPin) {
-      return newPin.offer.type === housingType.value;
-    });
-    window.pins.removePins();
-    drawPins(window.filtredData);
-  };
-
-  housingType.addEventListener('change', function () {
-    if (housingType.value === 'any') {
-      window.pins.removePins();
-      window.filtredData = window.serverData;
-
-      drawPins(window.filtredData);
-    } else {
-      updatePins();
-    }
-  });
 
   window.errorHandler = function (errorMessage) {
     let node = document.createElement('div');
@@ -92,7 +72,7 @@
     let drawnMapPinsImg = document.querySelectorAll('.map__pin img');
     for (let i = 1; i <= drawnMapPins.length; i++) {
       if (drawnMapPins[i] === evt.target || drawnMapPinsImg[i] === evt.target) {
-        window.drawCard(window.filtredData[i - 1]);
+        window.drawCard(window.filtredPins[i - 1]);
       }
     }
   });
