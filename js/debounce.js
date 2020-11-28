@@ -8,5 +8,6 @@
       window.clearTimeout(lastTimeout);
     }
     lastTimeout = setTimeout(cb, DEBOUNCE_INTERVAL);
+
   };
 })();
