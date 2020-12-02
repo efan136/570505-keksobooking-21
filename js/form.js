@@ -3,9 +3,25 @@
 (function () {
   let main = document.querySelector('main');
   let addressField = document.querySelector("#address");
+  let accommodationType = document.querySelector("#type");
+  let accommodationPrice = document.querySelector("#price");
+
   let roomNumber = document.querySelector("#room_number");
   let guestNumber = document.querySelector("#capacity");
   window.addForm = document.querySelector('.ad-form');
+  window.formResetButton = document.querySelector('.ad-form__reset');
+  let enterTimeIn = document.querySelector("#timein");
+  let leavingTime = document.querySelector("#timeout");
+
+  let setLeavingTime = function (timeIn, timeOut) {
+    if (timeIn.value === "12:00") {
+      timeOut.value = "12:00";
+    } else if (timeIn.value === "13:00") {
+      timeOut.value = "13:00";
+    } else if (timeIn.value === "14:00") {
+      timeOut.value = "14:00";
+    }
+  };
 
   let disableForm = function (arr) {
     for (let i = 0; i <= arr.length - 1; i++) {
@@ -45,7 +61,23 @@
     }
   };
 
-  let returnDefaultPage = function () {
+  let setMinPrice = function () {
+    if (accommodationType.value === "flat") {
+      accommodationPrice.min = 1000;
+      accommodationPrice.placeholder = 1000;
+    } else if (accommodationType.value === "bungalow") {
+      accommodationPrice.min = 0;
+      accommodationPrice.placeholder = 0;
+    } else if (accommodationType.value === "house") {
+      accommodationPrice.min = 5000;
+      accommodationPrice.placeholder = 5000;
+    } else if (accommodationType.value === "palace") {
+      accommodationPrice.min = 10000;
+      accommodationPrice.placeholder = 10000;
+    }
+  };
+
+  window.returnDefaultPage = function () {
     window.map.disableMap();
     window.form.disableForm(window.fieldsets);
     window.form.disableForm(window.selects);
@@ -60,7 +92,6 @@
     main.appendChild(uploadErrorPopup);
     let errorButton = document.querySelector('.error__button');
     let errorPopup = document.querySelector('.error');
-
     let closeErrorPopup = function () {
       main.removeChild(errorPopup);
     };
@@ -80,7 +111,7 @@
   };
 
   let successHandler = function () {
-    returnDefaultPage();
+    window.returnDefaultPage();
     let successTemplate = document.querySelector('#success').content.querySelector('.success');
     let uploadSuccessElement = successTemplate.cloneNode(true);
     main.appendChild(uploadSuccessElement);
@@ -88,6 +119,7 @@
     let closeSuccessPopup = function () {
       main.removeChild(SuccessPopup);
     };
+
     document.addEventListener('click', function () {
       closeSuccessPopup();
     });
@@ -98,9 +130,17 @@
       }
     });
   };
+
   window.addForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.upload(new FormData(window.addForm), successHandler, errorHandler);
+  });
+
+
+  window.addForm.addEventListener('change', function () {
+    setMinPrice();
+    setLeavingTime(enterTimeIn, leavingTime);
+
   });
 
   window.form = {
@@ -110,6 +150,4 @@
     activateForm: activateForm,
     fillAddressFieldActive: fillAddressFieldActive
   };
-
-
 })();

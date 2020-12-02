@@ -5,6 +5,7 @@
   window.mainMap = document.querySelector('.map');
   let pinCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+
   let renderCard = function (serverData) {
     let pinCardElement = pinCardTemplate.cloneNode(true);
     pinCardElement.querySelector('.popup__title').textContent = serverData.offer.title;
@@ -41,7 +42,6 @@
     return pinCardElement;
   };
 
-
   window.drawCard = function (serverData) {
 
     let fragment = document.createDocumentFragment();
@@ -57,18 +57,6 @@
 
     let closePinCardBtn = document.querySelector('.popup__close');
 
-    let closePinCard = function () {
-      let pinCard = document.querySelector('.popup');
-      window.mainMap.removeChild(pinCard);
-      document.removeEventListener('keydown', onPinCardEscPress);
-    };
-
-    let onPinCardEscPress = function (evt) {
-      if (evt.key === 'Escape') {
-        closePinCard();
-      }
-    };
-
     closePinCardBtn.addEventListener('click', function () {
       closePinCard();
     });
@@ -78,9 +66,23 @@
         closePinCard();
       }
     });
+  };
 
-    window.pinCards = {
-      closePinCard: closePinCard
-    };
+  let closePinCard = function () {
+    let pinCard = document.querySelector('.popup');
+    if (window.mainMap.contains(pinCard)) {
+      window.mainMap.removeChild(pinCard);
+      document.removeEventListener('keydown', onPinCardEscPress);
+    }
+  };
+
+  let onPinCardEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      closePinCard();
+    }
+  };
+
+  window.pinCards = {
+    closePinCard: closePinCard
   };
 })();
