@@ -1,12 +1,12 @@
 
 'use strict';
 (function () {
-  const mapFilter = document.querySelector('.map__filters');
-  const housingType = document.querySelector('#housing-type');
-  const housingPrice = document.querySelector('#housing-price');
-  const housingRooms = document.querySelector('#housing-rooms');
-  const housingGuests = document.querySelector('#housing-guests');
-  const husingFeatures = document.querySelectorAll('#housing-features input');
+  let mapFilter = document.querySelector('.map__filters');
+  let housingType = document.querySelector('#housing-type');
+  let housingPrice = document.querySelector('#housing-price');
+  let housingRooms = document.querySelector('#housing-rooms');
+  let housingGuests = document.querySelector('#housing-guests');
+  let husingFeatures = document.querySelectorAll('#housing-features input');
 
   let updatePins = function () {
     window.filtredPins = window.serverData;
