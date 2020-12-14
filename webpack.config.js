@@ -12,7 +12,7 @@ module.exports = {
     "./js/pinCard.js",
     "./js/map.js",
     "./js/main.js",
-    "./js/moveMainPin.js"
+    "./js/moveMainPin.js",
     "./js/showPreviewPhotos.js"
   ],
   output: {
