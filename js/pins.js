@@ -1,8 +1,9 @@
 'use strict';
 (function () {
-  window.mainPin = document.querySelector(".map__pin--main");
   const mainPinX = '570px';
   const mainPinY = '375px';
+
+  window.mainPin = document.querySelector(".map__pin--main");
   window.serverData = [];
 
   let pinTemplate = document.querySelector("#pin").content.querySelector(".map__pin");

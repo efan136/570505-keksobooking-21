@@ -13,6 +13,7 @@ module.exports = {
     "./js/map.js",
     "./js/main.js",
     "./js/moveMainPin.js"
+    "./js/showPreviewPhotos.js"
   ],
   output: {
     filename: "bundle.js",
