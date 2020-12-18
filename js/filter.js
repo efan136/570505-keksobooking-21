@@ -8,20 +8,18 @@
   let housingGuests = document.querySelector('#housing-guests');
   let husingFeatures = document.querySelectorAll('#housing-features input');
 
-  let updatePins = function () {
+  let updatePins = () => {
     window.filtredPins = window.serverData;
-    let filtredByType = function (data) {
+    let filtredByType = (data) => {
       if (housingType.value !== 'any') {
-        let filterType = data.filter(function (newPin) {
-          return newPin.offer.type === housingType.value;
-        });
+        let filterType = data.filter((newPin) => newPin.offer.type === housingType.value);
         window.filtredPins = filterType;
       }
     };
 
-    let filtredByPrice = function (data) {
+    let filtredByPrice = (data) => {
       if (housingPrice.value !== 'any') {
-        let priceFilter = data.filter(function (newPin) {
+        let priceFilter = data.filter((newPin) => {
           let acommodationPrice;
           if (newPin.offer.price < 10000) {
             acommodationPrice = "low";
@@ -35,30 +33,24 @@
         window.filtredPins = priceFilter;
       }
     };
-    let filtredByRooms = function (data) {
+    let filtredByRooms = (data) => {
       if (housingRooms.value !== 'any') {
-        let roomFilter = data.filter(function (newPin) {
-          return newPin.offer.rooms + '' === housingRooms.value;
-        });
+        let roomFilter = data.filter((newPin) => newPin.offer.rooms + '' === housingRooms.value);
         window.filtredPins = roomFilter;
       }
     };
 
-    let filtredByGuests = function (data) {
+    let filtredByGuests = (data) => {
       if (housingGuests.value !== 'any') {
-        let guestFilter = data.filter(function (newPin) {
-          return newPin.offer.guests + '' === housingGuests.value;
-        });
+        let guestFilter = data.filter((newPin) => newPin.offer.guests + '' === housingGuests.value);
         window.filtredPins = guestFilter;
       }
     };
 
-    let filtredByFeatures = function () {
+    let filtredByFeatures = () => {
       for (let i = 0; i < husingFeatures.length; i++) {
         if (husingFeatures[i].checked) {
-          let featuresFilter = window.filtredPins.filter(function (newPin) {
-            return newPin.offer.features[i] === husingFeatures[i].value;
-          });
+          let featuresFilter = window.filtredPins.filter((newPin) => newPin.offer.features[i] === husingFeatures[i].value);
           window.filtredPins = featuresFilter;
         }
       }
@@ -72,7 +64,7 @@
     window.drawPins(window.filtredPins);
   };
 
-  let updateMap = function () {
+  let updateMap = () => {
     let pinCard = document.querySelector('.popup');
     if (window.mainMap.contains(pinCard)) {
       window.pinCards.closePinCard();
@@ -81,7 +73,7 @@
     updatePins();
   };
 
-  mapFilter.addEventListener('change', function () {
+  mapFilter.addEventListener('change', () => {
     window.debounce(updateMap);
   });
 })();

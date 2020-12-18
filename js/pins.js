@@ -2,6 +2,8 @@
 (function () {
   const mainPinX = '570px';
   const mainPinY = '375px';
+  const MAIN_PIN_ARROW_HEIGHT = 22;
+  const MAX_PINS_ON_MAP = 5;
 
   window.mainPin = document.querySelector(".map__pin--main");
   window.serverData = [];
@@ -9,17 +11,16 @@
   let pinTemplate = document.querySelector("#pin").content.querySelector(".map__pin");
   let mapPins = document.querySelector(".map__pins");
 
-  const MAIN_PIN_ARROW_HEIGHT = 22;
-  const MAX_PINS_ON_MAP = 5;
+
   window.mainPinStartY = Math.round(window.mainPin.offsetHeight + MAIN_PIN_ARROW_HEIGHT);
   window.mainPinStartX = Math.round(window.mainPin.offsetWidth / 2);
 
-  window.mainPinResetPosition = function () {
+  window.mainPinResetPosition = () => {
     window.mainPin.style.left = mainPinX;
     window.mainPin.style.top = mainPinY;
   };
 
-  let removePins = function () {
+  let removePins = () => {
     let drawnPins = document.querySelectorAll('.map__pin');
     for (let i = drawnPins.length - 1; i >= 1; i--) {
       mapPins.removeChild(drawnPins[i]);
@@ -30,7 +31,7 @@
     removePins: removePins
   };
 
-  let sliceServerData = function (data) {
+  let sliceServerData = (data) => {
     if (data.length > MAX_PINS_ON_MAP) {
       return data.slice(0, MAX_PINS_ON_MAP);
     } else {
@@ -38,7 +39,7 @@
     }
   };
 
-  window.drawPins = function (data) {
+  window.drawPins = (data) => {
     let slicedData = sliceServerData(data);
     for (let i = 0; i < slicedData.length; i++) {
       let pinElement = pinTemplate.cloneNode(true);
@@ -50,14 +51,14 @@
     }
   };
 
-  window.successHandler = function (data) {
+  window.successHandler = (data) => {
     window.serverData = data;
     window.drawPins(data);
     window.filtredData = window.serverData;
     window.filtredPins = window.filtredData;
   };
 
-  window.errorHandler = function (errorMessage) {
+  window.errorHandler = (errorMessage) => {
     let node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
@@ -68,7 +69,7 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  mapPins.addEventListener('click', function (evt) {
+  mapPins.addEventListener('click', (evt) => {
     let drawnMapPins = document.querySelectorAll('.map__pin');
     let drawnMapPinsImg = document.querySelectorAll('.map__pin img');
     for (let i = 1; i <= drawnMapPins.length; i++) {

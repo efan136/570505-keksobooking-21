@@ -13,7 +13,7 @@
   let enterTimeIn = document.querySelector("#timein");
   let leavingTime = document.querySelector("#timeout");
 
-  let setLeavingTime = function (timeIn, timeOut) {
+  let setLeavingTime = (timeIn, timeOut) => {
     if (timeIn.value === "12:00") {
       timeOut.value = "12:00";
     } else if (timeIn.value === "13:00") {
@@ -23,29 +23,29 @@
     }
   };
 
-  let disableForm = function (arr) {
+  let disableForm = (arr) => {
     for (let i = 0; i <= arr.length - 1; i++) {
       arr[i].disabled = true;
     }
   };
 
-  let fillAddressFieldDisabled = function () {
+  let fillAddressFieldDisabled = () => {
     addressField.value = Math.round(window.mainPin.offsetTop + (window.mainPin.offsetHeight / 2)) + "," + Math.round(window.mainPin.offsetLeft + (window.mainPin.offsetWidth / 2));
   };
 
-  let activateForm = function (arr) {
+  let activateForm = (arr) => {
     for (let i = 0; i <= arr.length - 1; i++) {
       arr[i].disabled = false;
     }
   };
 
-  let fillAddressFieldActive = function () {
+  let fillAddressFieldActive = () => {
     let mainPinCurrentY = Math.round(window.mainPin.offsetTop + window.mainPinStartY);
     let mainPinCurrentX = Math.round(window.mainPin.offsetLeft + window.mainPinStartX);
     addressField.value = mainPinCurrentY + "," + mainPinCurrentX;
   };
 
-  let validateGuestForm = function () {
+  let validateGuestForm = () => {
     if (Number(roomNumber.value) === 1 && Number(guestNumber.value) !== 1) {
       roomNumber.setCustomValidity('1 комната только для одного гостя');
     } else if (Number(roomNumber.value) === 2 && Number(guestNumber.value) > 2) {
@@ -61,7 +61,7 @@
     }
   };
 
-  let setMinPrice = function () {
+  let setMinPrice = () => {
     if (accommodationType.value === "flat") {
       accommodationPrice.min = 1000;
       accommodationPrice.placeholder = 1000;
@@ -77,70 +77,72 @@
     }
   };
 
-  window.returnDefaultPage = function () {
+  window.returnDefaultPage = () => {
     window.map.disableMap();
     window.form.disableForm(window.fieldsets);
     window.form.disableForm(window.selects);
     window.pins.removePins();
     window.addForm.reset();
     window.mainPinResetPosition();
+    window.mainPin.addEventListener("mousedown", window.activatePage);
   };
 
-  let errorHandler = function () {
+  let errorHandler = () => {
     let errorTemplate = document.querySelector('#error').content.querySelector('.error');
     let uploadErrorPopup = errorTemplate.cloneNode(true);
     main.appendChild(uploadErrorPopup);
     let errorButton = document.querySelector('.error__button');
     let errorPopup = document.querySelector('.error');
-    let closeErrorPopup = function () {
+    let closeErrorPopup = () => {
       main.removeChild(errorPopup);
     };
 
-    errorButton.addEventListener('click', function () {
+    errorButton.addEventListener('click', () => {
       closeErrorPopup();
     });
 
-    document.addEventListener('keydown', function (evt) {
+    document.addEventListener('keydown', (evt) => {
       if (evt.key === 'Escape') {
         closeErrorPopup();
       }
     });
-    document.addEventListener('click', function () {
+    document.addEventListener('click', () => {
       closeErrorPopup();
     });
   };
 
-  let successHandler = function () {
+  let successHandler = () => {
     window.returnDefaultPage();
     let successTemplate = document.querySelector('#success').content.querySelector('.success');
     let uploadSuccessElement = successTemplate.cloneNode(true);
     main.appendChild(uploadSuccessElement);
     let SuccessPopup = main.querySelector('.success');
-    let closeSuccessPopup = function () {
-      main.removeChild(SuccessPopup);
+    let closeSuccessPopup = () => {
+      if (main.contains(SuccessPopup)) {
+        main.removeChild(SuccessPopup);
+      }
     };
 
-    document.addEventListener('click', function () {
+    document.addEventListener('click', () => {
       closeSuccessPopup();
     });
 
-    document.addEventListener('keydown', function (evt) {
+    document.addEventListener('keydown', (evt) => {
       if (evt.key === 'Escape') {
         closeSuccessPopup();
       }
     });
   };
 
-  window.addForm.addEventListener('submit', function (evt) {
+  window.addForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     window.upload(new FormData(window.addForm), successHandler, errorHandler);
   });
 
 
-  window.addForm.addEventListener('change', function () {
+  window.addForm.addEventListener('change', () => {
     setMinPrice();
     setLeavingTime(enterTimeIn, leavingTime);
-
   });
 
   window.form = {

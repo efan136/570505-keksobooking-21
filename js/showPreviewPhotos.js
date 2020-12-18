@@ -8,18 +8,16 @@
   let photosPreview = document.querySelector(".ad-form__photo img");
 
 
-  let showPreview = function (fileChooser, preview) {
-    fileChooser.addEventListener('change', function () {
+  let showPreview = (fileChooser, preview) => {
+    fileChooser.addEventListener('change', () => {
       let file = fileChooser.files[0];
       let fileName = file.name.toLowerCase();
 
-      let matches = TYPE_FILES.some(function (it) {
-        return fileName.endsWith(it);
-      });
+      let matches = TYPE_FILES.some((it) => fileName.endsWith(it));
 
       if (matches) {
         let reader = new FileReader();
-        reader.addEventListener('load', function () {
+        reader.addEventListener('load', () => {
           preview.src = reader.result;
         });
 

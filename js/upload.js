@@ -4,17 +4,17 @@
   const StatusCode = {
     OK: 200
   };
-  window.upload = function (data, onSuccess, onError) {
+  window.upload = (data, onSuccess, onError) => {
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.addEventListener('load', function () {
+    xhr.addEventListener('load', () => {
       if (xhr.status === StatusCode.OK) {
         onSuccess();
       } else {
         onError();
       }
     });
-    xhr.addEventListener('error', function () {
+    xhr.addEventListener('error', () => {
       onError();
     });
     xhr.open('POST', URL);

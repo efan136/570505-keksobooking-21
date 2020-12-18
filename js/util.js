@@ -1,18 +1,18 @@
 'use strict';
 (function () {
-  let isEnterEvent = function (evt, action) {
+  let isEnterEvent = (evt, action) => {
     if (evt.key === 'Enter') {
       action();
     }
   };
 
-  let isEscEvent = function (evt, action) {
+  let isEscEvent = (evt, action) => {
     if (evt.key === 'Escape') {
       action();
     }
   };
 
-  let sliceArr = function (array, maxValue) {
+  let sliceArr = (array, maxValue) => {
     if (array.length > maxValue) {
       return array.slice(0, maxValue);
     } else {

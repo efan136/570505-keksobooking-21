@@ -6,21 +6,21 @@
   let leftMapBorder = 0 - window.mainPinStartX;
   let rightMapBorder = window.mainMap.offsetWidth - window.mainPinStartX;
 
-  window.mainPin.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, function () {
+  window.mainPin.addEventListener('keydown', (evt) => {
+    window.util.isEnterEvent(evt, () => {
       window.load(window.successHandler, window.errorHandler);
       window.map.activateMap();
     });
   });
 
-  window.mainPin.addEventListener('mousedown', function (evt) {
+  window.mainPin.addEventListener('mousedown', (evt) => {
     evt.preventDefault();
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
 
-    var onMouseMove = function (moveEvt) {
+    var onMouseMove = (moveEvt) => {
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -52,7 +52,7 @@
 
     };
 
-    var onMouseUp = function (upEvt) {
+    var onMouseUp = (upEvt) => {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', onMouseMove);
